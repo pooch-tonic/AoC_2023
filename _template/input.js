@@ -1,8 +1,11 @@
-const testInput = ``;
+const testInput1 = ``;
+
+const testInput2 = ``;
 
 const input = ``;
 
 module.exports = {
   input,
-  testInput,
+  testInput1,
+  testInput2,
 };
