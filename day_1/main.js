@@ -6,28 +6,37 @@ const { input, testInput2 } = require("./input");
 // use this line for in-depth debugging
 // console.log(util.inspect(myObject, {showHidden: false, depth: null, colors: true}))
 
-const regex = /\d|one|two|three|four|five|six|seven|eight|nine/g;
+const regex = /(?=(one|two|three|four|five|six|seven|eight|nine|\d))/g;
+
+const dict = {
+  one: "1",
+  two: "2",
+  three: "3",
+  four: "4",
+  five: "5",
+  six: "6",
+  seven: "7",
+  eight: "8",
+  nine: "9",
+};
 
 console.log(
-  testInput2
+  input
     .split("\n")
-    .map((e) => {
-      console.log(e);
-      const str = e
-        .replace("one", "1")
-        .replace("two", "2")
-        .replace("three", "3")
-        .replace("four", "4")
-        .replace("five", "5")
-        .replace("six", "6")
-        .replace("seven", "7")
-        .replace("eight", "8")
-        .replace("nine", "9");
-      console.log(str);
-      const matches = str.match(regex);
-      console.log(matches);
-      const res = parseInt(`${matches[0]}${matches.slice(-1)[0]}`);
-      console.log(res);
+    .map((str) => {
+      // console.log(str);
+      const matches = [...str.matchAll(regex)];
+
+      // console.log(matches.map((e) => e[1]));
+
+      const first = matches[0][1]; // second [1] needed since this regex match is formatted like [ '', 'two', index: 0, input: 'two1nine', groups: undefined ]
+      const last = matches.slice(-1)[0][1];
+
+      const digitLeft = dict[first] || first;
+      const digitRight = dict[last] || last;
+
+      const res = parseInt(`${digitLeft}${digitRight}`);
+      // console.log(res);
       return res;
     })
     .reduce((acc, curr) => (acc += curr), 0)
