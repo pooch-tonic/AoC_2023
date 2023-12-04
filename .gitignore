@@ -1,2 +1,3 @@
 # Recursively ignore all files named "input.js"
+!_template/**
 **/input.js
